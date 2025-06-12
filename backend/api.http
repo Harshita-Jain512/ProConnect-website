@@ -1,8 +1,52 @@
 POST http://localhost:9080/register HTTP/1.1
-content-Type: application/json
+Content-Type: application/json
+
 {
-    "username"
-    "password"
-    "email":
-    "name":
+  "username": "john_doe_31",
+  "password": "securePassword123",
+  "email": "john31@example.com",
+  "name": "John Doe"
+
 }
+###
+POST http://localhost:9080/login
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john31@example.com",
+  "password": "securePassword123",
+  "username": "john_doe_31"
+
+}
+###
+GET http://localhost:9080/get_user_and_profile?token=b9f86de6fb11c2103249e85638c394605ab555a538d39f54157a9b9c09b04e84
+
+
+
+###
+### Update Profile Data
+POST http://localhost:9080/update_profile_data
+Content-Type: application/json
+
+{
+  "token": "b9f86de6fb11c2103249e85638c394605ab555a538d39f54157a9b9c09b04e84",
+  "bio": "",
+  "currentPost": "CTO",
+  "pastWork": [
+    {
+      "company": "Microsoft",
+      "position": "CTO",
+      "years": "2+"
+    }
+  ],
+  "education": [
+    {
+      "school": "IIIT",
+      "degree": "BCA",
+      "fieldOfStudy": "2015-2019"
+    }
+  ]
+}
+### Get all user profiles
+GET http://localhost:9080/user/get_all_users
