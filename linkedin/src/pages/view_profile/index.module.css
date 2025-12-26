@@ -1,0 +1,123 @@
+.container {
+    padding: 1.3rem;
+    background: rgb(255, 253, 253);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.backDropContainer {
+width: 100%;
+height: 30vh;
+background: url("https://images.pexels.com/photos/27834573/pexels-photo-27834573.jpeg?_gl=1*znk9s3*_ga*NDc5MTI4MDQwLjE3NjYyMjgyODQ.*_ga_8JE65Q40S6*czE3NjYyMjgyODQkbzEkZzEkdDE3NjYyMjg1MjAkajI5JGwwJGgw");
+background-size: cover;
+background-repeat: no-repeat;
+position: relative;
+border-radius: 20px;
+}
+
+.backDropContainer img {
+    width: 10em;
+    height: 10em;
+    object-fit: cover;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30%;
+    left: 8%;
+    text-align: center;
+}
+
+.profileContainer__details{
+    padding-top: 6.6rem;
+
+}
+
+.card{
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.card__profileContainer {
+    display: flex;
+}
+
+.card__profileContainer > img {
+    width: 3.4rem;
+    height: auto;
+    height: 3.4rem;
+    object-fit: cover;
+}
+
+.connectBtn {
+    padding-inline: 0.8rem;
+    padding-block: 0.3rem;
+    background: rgba(3,93,183,0.905);
+    outline: none;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.connectedButton {
+    padding-inline: 0.8rem;
+    padding-block: 0.3rem;
+    background: rgb(253, 251, 251);
+    outline: none;
+    color: rgb(34, 128, 204);
+    border: 1px solid rgb(69, 148, 161);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  gap: 0.3rem; /* small spacing between name, username, and button */
+}
+
+.profileHeader .name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.profileHeader .username {
+  color: gray;
+  font-size: 14px;
+}
+
+.profileHeader .connectBtn {
+  padding: 0.3rem 0.8rem;
+  background: rgba(3, 93, 183, 0.9);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  width: fit-content; /* button only as wide as text */
+}
+
+.profileHeader .connectBtn:hover {
+  background: rgba(3, 93, 183, 1);
+}
+
+.profileBio {
+  margin-top: 0.5rem;
+  font-size: 14px;
+  color: #333;
+}
+.workHistoryContainer {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+}
+.workHistoryCard {
+  min-width: fit-content;
+  padding-inline: 2.5rem;
+  padding-block: 1rem;
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgb(173, 173, 173);
+}

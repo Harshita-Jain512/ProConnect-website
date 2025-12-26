@@ -1,0 +1,51 @@
+.userCard {
+    display: flex;
+    width: 100%;
+    gap: 1.2rem;
+    align-items: center;
+    box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.1);
+  padding: 1.3rem;
+}
+
+.profilePicture > img {
+    width: 6.5rem;
+    border-radius: 50%;
+  }
+  
+  .myConnections {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+    cursor: pointer;
+  }
+
+  .userCard {
+  width: 100%;
+  box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.1);
+  padding: 1.3rem;
+}
+
+/* Row layout */
+.userInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.profilePicture img {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.userDetails p {
+  margin: 0;
+  color: gray;
+}
