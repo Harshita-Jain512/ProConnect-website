@@ -8,6 +8,7 @@ import ConnectionRequest from "../models/connections.model.js";
 import mongoose from 'mongoose';
 import Post from "../models/posts.model.js";
 const { Connection } = mongoose;
+import Comment from "../models/comments.model.js";
 
 
 
@@ -18,10 +19,15 @@ const convertUserDataTOPDF = async(userData) => {
     doc.pipe(stream);
 
     // ✅ Profile Picture
-    doc.image(`uploads/${userData.userId.profilePicture}`, {
-        align: "center",
-        width: 100
-    });
+    const imagePath = userData.userId.profilePicture === "default.jpg"
+  ? "uploads/default.jpg"
+  : `uploads/${userData.userId.profilePicture}`;
+
+doc.image(imagePath, {
+  align: "center",
+  width: 100
+});
+
 
     // ✅ Profile Data
     doc.fontSize(14).text(`Name: ${userData.userId.name}`);
@@ -79,29 +85,30 @@ export const register = async (req, res) => {
 
 // ================= LOGIN ====================
 export const login = async (req, res) => {
-    try {
-        const { name, email, password, username } = req.body;
-        if (!name || !email || !password || !username) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
+  try {
+    const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ message: "User does not exist" });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid Credentials" });
-        }
-
-        const token = crypto.randomBytes(32).toString("hex");
-        await User.updateOne({ _id: user._id }, { token });
-
-        return res.json({ token });
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
     }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid Credentials" });
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+    await User.updateOne({ _id: user._id }, { token });
+
+    return res.json({ token, user }); // add user details too if needed
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 // ================= UPLOAD PROFILE PICTURE ====================
@@ -188,6 +195,15 @@ export const uploadProfileData = async (req, res ) => {
 export const getAllUserProfile = async (req, res) => {
     try {
         const profiles = await Profile.find().populate('userId', 'name username email profilePicture');
+    profiles.forEach(p => {
+  if (
+    !p.userId.profilePicture ||
+    p.userId.profilePicture === "default.jpg"
+  ) {
+    p.userId.profilePicture = "uploads/default.jpg";
+  }
+});
+
         return res.json({ profiles }); // ✅ now it matches the variable name
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -195,7 +211,10 @@ export const getAllUserProfile = async (req, res) => {
 };
 export const downloadProfile = async (req, res)=> {
 const user_id = req.query.id;
-const userProfile = await profile.findOne({userId: user_id})
+console.log("USER ID:", user_id);
+
+//return res.json({"message": "Not Implemented Yet"});
+const userProfile = await Profile.findOne({userId: user_id})
 .populate('userId', 'name username email profilePicture');
 let outputPath = await convertUserDataTOPDF(userProfile);
 return res.json({"message" : outputPath })
@@ -226,6 +245,7 @@ export const sendConnectionRequest = async(req, res) => {
             connectionId: connectionUser._id
        });
        await request.save();
+       
        return res.json({message: "Request Send"})
 
     } catch (err) {
@@ -234,22 +254,27 @@ export const sendConnectionRequest = async(req, res) => {
 }
 
 export const getMyConnectionRequests = async (req, res) => {
-    const { token } = req.body;
-    try {
-       const user = await User.findOne({token }) ;
-       if(!user){
-        return res.status(404).json({ message: "User not found" });
-       }
-       const connections = await ConnectionRequest.find({message: "User not found"})
-       .populate("connectionId", 'name username email profilePicture');
-       return res.json ({connections})
-    } catch (err) {
-        return res.status(500).json({ message: error.message });
+  const { token } = req.query; // ✅ GET uses query
+
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
+
+    const connections = await ConnectionRequest.find({
+      userId: user._id
+    }).populate("connectionId", "name username email profilePicture");
+
+    return res.json({ connections });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 
 export const whatAreMyConnections = async(req, res) => {
-    const {token } = req.body;
+    const {token } = req.query;
     try {
         const user = await User.findOne({token }) ;
         if(!user){
@@ -287,7 +312,8 @@ export const acceptConnectionRequest = async(req, res) => {
 }
 
 export const commentPost = async (req, res) => {
-    const { token, post_id, commentBody} = req.body;
+    console.log("COMMENT BODY:", req.body);
+    const { token, post_id, body} = req.body;
     try {
         const user = await User.findOne({ token: token }).select("_id");
         if(!user){
@@ -300,11 +326,38 @@ export const commentPost = async (req, res) => {
         const comment = new Comment({
             userId: user._id,
             postId: post_id,
-            comment: commentBody
+            body: body
         });
         await comment.save();
         return res.status(200).json({message: "Comment Added"})
     } catch (error) {
+        console.error("COMMENT ERROR:", error); 
          return res.status(500).json({ message: error.message });
     }
 }
+
+export const getUserProfileAndUserBasedOnUsername = async(req, res) => {
+    const{ username} = req.query;
+    try{
+
+        const user = await User.findOne({
+            username
+        });
+        if(!user){
+            return res.status(404).json({ message: "User not found"})
+        }
+
+        const userProfile = await Profile.findOne({ userId: user._id})
+        .populate('userId','name username email profilePicture');
+        if (
+  !userProfile.userId.profilePicture ||
+  userProfile.userId.profilePicture === "default.jpg"
+) {
+  userProfile.userId.profilePicture = "uploads/default.jpg";
+}
+        return res.json({"profile": userProfile})
+    }catch(err){
+        return res.status(500).json({ message: error.message });
+    }
+}
+ 

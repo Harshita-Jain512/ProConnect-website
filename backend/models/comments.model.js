@@ -7,7 +7,7 @@ ref: "User"
     },
     postId: {
 type: mongoose.Schema.Types.ObjectId,
-ref: "post"
+ref: "Post"
     },
     body: {
 type: String,

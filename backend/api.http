@@ -20,7 +20,7 @@ Content-Type: application/json
 
 }
 ###
-GET http://localhost:9080/get_user_and_profile?token=b9f86de6fb11c2103249e85638c394605ab555a538d39f54157a9b9c09b04e84
+GET http://localhost:9080/get_user_and_profile?token=ed7b8f6ab6c5e37a2069d3c66ee15a7f6ab1bd7b093289e77854a6f73324665f
 
 
 
@@ -30,8 +30,8 @@ POST http://localhost:9080/update_profile_data
 Content-Type: application/json
 
 {
-  "token": "b9f86de6fb11c2103249e85638c394605ab555a538d39f54157a9b9c09b04e84",
-  "bio": "",
+  "token": "79352894958e44ce87df6e75ed2756881ae5ce5b1414f396cab5956351a25b2b",
+  "bio": "Hey i am neha",
   "currentPost": "CTO",
   "pastWork": [
     {

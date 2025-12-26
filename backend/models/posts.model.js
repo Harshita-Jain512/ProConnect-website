@@ -29,10 +29,11 @@ const postSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
-    filetypes: { // ✅ matches controller and accepts array
-        type: [String],
-        default: []
-    }
+    filetypes: {
+  type: String, // ✅ changed from array to string
+  default: ""
+}
+
 });
 
 const Post = mongoose.model("Post", postSchema);
