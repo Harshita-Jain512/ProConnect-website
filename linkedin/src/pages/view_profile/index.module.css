@@ -63,10 +63,9 @@ border-radius: 20px;
 .connectedButton {
     padding-inline: 0.8rem;
     padding-block: 0.3rem;
-    background: rgb(253, 251, 251);
     outline: none;
-    color: rgb(34, 128, 204);
-    border: 1px solid rgb(69, 148, 161);
+    color: rgb(3, 93, 183, 0.905);
+    border: 1px solid rgb(3, 93, 183, 0.905);
     border-radius: 10px;
     cursor: pointer;
 }

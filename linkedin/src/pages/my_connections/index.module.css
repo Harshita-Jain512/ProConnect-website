@@ -15,7 +15,7 @@
   .myConnections {
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     padding-bottom: 1.5rem;
     cursor: pointer;
   }
@@ -48,4 +48,13 @@
 .userDetails p {
   margin: 0;
   color: gray;
+}
+.connectedButton {
+    padding-inline: 0.8rem;
+    padding-block: 0.3rem;
+    outline: none;
+    color: rgb(3, 93, 183, 0.905);
+    border: 1px solid rgb(3, 93, 183, 0.905);
+    border-radius: 10px;
+    cursor: pointer;
 }

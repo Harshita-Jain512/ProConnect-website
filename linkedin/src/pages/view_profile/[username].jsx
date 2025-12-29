@@ -7,7 +7,7 @@ import styles from './index.module.css';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from "react-redux";
 import  getAllPosts from '@/config/redux/action/postAction';
-import { sendConnectionRequest } from '@/config/redux/action/authAction';
+import { getMyConnectionRequests, sendConnectionRequest } from '@/config/redux/action/authAction';
 import { getConnectionsRequest } from '@/config/redux/action/authAction';
 
 export default function ViewProfilePage({ userProfile }) {
@@ -21,6 +21,14 @@ export default function ViewProfilePage({ userProfile }) {
   const [userPosts, setUserPosts] = useState([]);
   const [isCurrentUserInConnection, setIsCurrentUserInConnection] = useState(false);
   const [isConnectionNull, setIsConnectionNull] = useState(true);
+
+  
+    useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(getMyConnectionRequests({ token }));
+    }
+  }, [dispatch]);
 
   // 🔥 ADD THIS useEffect HERE
   // 1️⃣ Fetch connections
@@ -40,22 +48,35 @@ useEffect(() => {
 }, [postReducer.posts, router.query.username]);
 
 // 3️⃣ Connection status (FIXED)
-useEffect(() => {
-  if (!authState.connections?.length) return;
+// 4️⃣ DETERMINE CONNECTION STATUS (FINAL & FIXED)
+  useEffect(() => {
+    if (!userProfile?.userId?._id) return;
 
-  const connection = authState.connections.find(
-    c => c.connectionId?._id === userProfile.userId._id
-  );
+    const acceptedConnection = authState.connections?.find(
+      c => c.connectionId?._id === userProfile.userId._id
+    );
 
-  if (connection) {
-    setIsCurrentUserInConnection(true);
-    setIsConnectionNull(connection.status_accepted !== true);
-  } else {
-    setIsCurrentUserInConnection(false);
-    setIsConnectionNull(true);
-  }
-}, [authState.connections, userProfile.userId._id]);
+    const pendingRequest = authState.connectionRequest?.find(
+      r => r.userId?._id === userProfile.userId._id
+    );
 
+    if (acceptedConnection || pendingRequest) {
+      setIsCurrentUserInConnection(true);
+      setIsConnectionNull(
+        !(
+          acceptedConnection?.status_accepted === true ||
+          pendingRequest?.status_accepted === true
+        )
+      );
+    } else {
+      setIsCurrentUserInConnection(false);
+      setIsConnectionNull(true);
+    }
+  }, [
+    authState.connections,
+    authState.connectionRequest,
+    userProfile.userId._id
+  ]);
 
 
   return (
