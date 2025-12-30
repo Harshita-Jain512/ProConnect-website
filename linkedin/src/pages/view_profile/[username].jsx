@@ -86,7 +86,7 @@ useEffect(() => {
           <div className={styles.backDropContainer}>
             <img 
               className={styles.backDrop} 
-              src={`${BASE_URL}/${userProfile.userId.profilePicture}`} 
+              src={`${BASE_URL}/uploads/${userProfile.userId.profilePicture}`} 
               alt='backdrop'
             />
           </div>

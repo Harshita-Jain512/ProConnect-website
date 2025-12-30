@@ -33,7 +33,8 @@ doc.image(imagePath, {
     doc.fontSize(14).text(`Name: ${userData.userId.name}`);
     doc.fontSize(14).text(`Username: ${userData.userId.username}`);
     doc.fontSize(14).text(`Email: ${userData.userId.email}`);
-    doc.fontSize(14).text(`Bio: ${userData.userId.bio}`);
+    doc.fontSize(14).text(`Bio: ${userData.bio}`);
+
     doc.fontSize(14).text(`Current Position: ${userData.currentPost}`);
 
     // ✅ Past Work
@@ -200,7 +201,7 @@ export const getAllUserProfile = async (req, res) => {
     !p.userId.profilePicture ||
     p.userId.profilePicture === "default.jpg"
   ) {
-    p.userId.profilePicture = "uploads/default.jpg";
+    p.userId.profilePicture = "/default.jpg";
   }
 });
 
@@ -217,7 +218,7 @@ console.log("USER ID:", user_id);
 const userProfile = await Profile.findOne({userId: user_id})
 .populate('userId', 'name username email profilePicture');
 let outputPath = await convertUserDataTOPDF(userProfile);
-return res.json({"message" : outputPath })
+return res.json({"message" : `uploads/${outputPath}` })
 }
 
 export const sendConnectionRequest = async(req, res) => {
@@ -353,7 +354,7 @@ export const getUserProfileAndUserBasedOnUsername = async(req, res) => {
   !userProfile.userId.profilePicture ||
   userProfile.userId.profilePicture === "default.jpg"
 ) {
-  userProfile.userId.profilePicture = "uploads/default.jpg";
+  userProfile.userId.profilePicture = "default.jpg";
 }
         return res.json({"profile": userProfile})
     }catch(err){

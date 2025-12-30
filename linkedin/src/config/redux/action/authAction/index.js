@@ -50,7 +50,7 @@ export const getAboutUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await clientServer.get("/get_user_and_profile", {
-        params: {
+        params : {
           token: user.token
         }
       });
@@ -58,7 +58,7 @@ export const getAboutUser = createAsyncThunk(
       const userData = response.data;
 
       return thunkAPI.fulfillWithValue({
-        profile: userData.userId,              // ✅ Send proper user object
+        profile: response.data,              // ✅ Send proper user object
         connections: userData.connections || [],
         connectionRequest: userData.connectionRequest || []
       });

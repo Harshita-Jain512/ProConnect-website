@@ -30,7 +30,14 @@ export default function MyConnections() {
               
                     {authState.connectionRequest.length === 0 && <h1>No connection requests Pending</h1>}
 
-              {authState.connectionRequest.length != 0 && authState.connectionRequest.filter((connection) => connection.status_accepted === null).map((user, index) => {
+              {authState.connectionRequest.length != 0 && authState.connectionRequest.filter((connection) => connection.status_accepted === null)
+              .map((user, index) => {
+                const otherUser =
+      user.userId?._id === authState.user?.userId?._id
+        ? user.connectionId
+        : user.userId;
+
+    if (!otherUser) return null; // safety guard
 return (
   <div onClick={() => {
     router.push(`/view_profile/${user.userId.username}`);
@@ -45,8 +52,8 @@ return (
       />
     </div>
   <div className={styles.userInfo}>
-    <h3>{user.userId.name}</h3>
-    <p>@{user.userId?.username}</p>
+    <h3>{otherUser.name}</h3>
+    <p>@{otherUser.username}</p>
     </div>
      <button onClick={(e) => {
       e.stopPropagation();
@@ -65,7 +72,14 @@ return (
               <div style={{display: "flex", flexDirection: "column", gap: "1.7rem"}}></div>
               <h4>My Network</h4>
              
-           {authState.connectionRequest.filter((connection) => connection.status_accepted !== null).map((user, index) => {
+           {authState.connectionRequest.filter((connection) => connection.status_accepted !== null)
+           .map((user, index) => {
+            const otherUser =
+      user.userId?._id === authState.user?.userId?._id
+        ? user.connectionId
+        : user.userId;
+
+    if (!otherUser) return null;
           return(
           <div onClick={() => {
     router.push(`/view_profile/${user.userId.username}`);
@@ -80,8 +94,9 @@ return (
       />
     </div>
   <div className={styles.userInfo}>
-    <h3>{user.userId.name}</h3>
-    <p>@{user.userId?.username}</p>
+    <h3>{otherUser.name}</h3>
+          <p>@{otherUser.username}</p>
+
     </div>
      
     

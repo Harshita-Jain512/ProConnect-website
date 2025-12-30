@@ -1,4 +1,4 @@
-.container {
+ .container {
   padding: 1.5rem;
   background: #ffffff;
   display: flex;
@@ -36,6 +36,7 @@
   background-color: #e9e9e9;    /* subtle background like LinkedIn */
   z-index: 2;
   padding: 6px;                /* space so image doesn't touch edge */
+  box-sizing: border-box;
 }
 
 /* Profile Image Overlay */
@@ -56,6 +57,9 @@
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.3s ease;
+  border: 5px solid white;
+  padding: 6px;
+  box-sizing: border-box;
 }
 
 .backDropContainer:hover .backDrop__overlay {
@@ -170,4 +174,40 @@
   .profileContainer__details {
     padding-top: 4.5rem;
   }
+}
+
+.nameEdit {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.updateProfileBtn {
+    padding-inline: 0.8rem;
+    padding-block: 0.3rem;
+    background: rgba(3,93,183,0.905);
+    outline: none;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+}
+.profileContainer__details textarea {
+   outline: none;
+   border: none;
+
+   padding-inline: 10px;
+   padding-block: 9px;
+   font-family: "poppins" !important;
+   font-size: 1.1rem;
+}
+
+.addWorkButton {
+  border-style: dotted;
+  padding-inline: 1.3rem;
+  background: white;
+  border: 1px dotted silver;
+  border-radius: 10px;
+  padding-block: 1.2rem;
+  cursor: pointer;
 }

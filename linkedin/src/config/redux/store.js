@@ -13,9 +13,10 @@ import postReducer from "./reducer/postReducer";
  * 3. Register reducer here
  */
 
-export const store = configureStore({
+ const store = configureStore({
   reducer: {
     auth: authReducer,
     postReducer: postReducer
   }
 });
+export default store;
