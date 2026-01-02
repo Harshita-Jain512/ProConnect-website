@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
 
-const BASE_URL = "http://localhost:9080";
+const BASE_URL = "https://proconnect-website.onrender.com";
 
 export default function Dashboard() {
   const router = useRouter();
