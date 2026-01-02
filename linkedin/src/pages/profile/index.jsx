@@ -12,13 +12,25 @@ import styles from './index.module.css'
 
 export default function ProfilePage() {
 
-  const dispatch = useDispatch()
+  
 
   const authState = useSelector((state) => state.auth)
   const postReducer = useSelector((state) => state.postReducer)
 
   const [userProfile, setUserProfile] = useState(null)
   const [userPosts, setUserPosts] = useState([])
+
+  const dispatch = useDispatch();
+
+  const [ isModalOpen, setIsModalOpen] = useState(false);
+
+  const[inputData, setInputData] = useState({company: " ", position: "", years: ""});
+  
+  const handleWorkInputChange = (e) => {
+     const {name, value} =e.target;
+     setInputData({...inputData, [name]: value});
+  }
+  
 
   /* ----------------------------------
      FETCH DATA
@@ -193,7 +205,7 @@ const updateProfilePicture = async(file ) => {
                 </div>
               ))}
                 <button className={styles.addWorkButton}  onClick={() => {
-
+                  setIsModalOpen(true)
                 }}> Add Work </button>
             </div>
 
@@ -205,6 +217,51 @@ const updateProfilePicture = async(file ) => {
         </div>
 }
 </div>
+
+{isModalOpen && 
+        <div 
+        onClick={() =>{
+          setIsModalOpen(false)
+        }}className={styles.commentsContainer}> 
+          <div
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
+        className={styles.allCommentsContainer}>
+          <input
+                onChange={handleWorkInputChange}
+                name='company'
+                className={styles.inputField}
+                type="text"
+                placeholder="Enter Company"
+              />
+
+              <input
+                onChange={handleWorkInputChange}
+                name='position'
+                className={styles.inputField}
+                type="text"
+                placeholder="Enter Position"
+              />
+
+              <input
+                onChange={handleWorkInputChange}
+                name='years'
+                className={styles.inputField}
+                type="number"
+                placeholder=" Years "
+              />
+              <div onClick={() => {
+                setUserProfile({...userProfile, pastWork: [...userProfile.pastWork, inputData]})
+                setIsModalOpen(false);
+              }} className={styles.updateProfileBtn}>Add work</div>
+          
+          </div>
+          </div>
+  
+        
+          }
+
       </DashboardLayout>
     </UserLayout>
   )

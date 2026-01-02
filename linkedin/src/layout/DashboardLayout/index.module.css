@@ -49,4 +49,38 @@
 }
 
 
+@media only screen and (max-width: 600px){
+.homeContainer__extraContainer {
+    display: none;
+}
+
+.homeContainer{
+    display: block;
+}
+
+.homeContainer__leftBar{
+    display: none;
+}
+
+.mobileNavBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 6vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    align-items: center;
+}
+
+.mobileNavBar svg {
+    height: 1.2rem;
+    width: 1.2rem;
+}
+}
+
+
+
+
 

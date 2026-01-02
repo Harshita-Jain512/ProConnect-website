@@ -162,19 +162,7 @@
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 768px) {
-  .backDropContainer img,
-  .backDrop__overlay {
-    width: 120px;
-    height: 120px;
-    bottom: -60px;
-    left: 1rem;
-  }
 
-  .profileContainer__details {
-    padding-top: 4.5rem;
-  }
-}
 
 .nameEdit {
   font-size: 1.5rem;
@@ -210,4 +198,40 @@
   border-radius: 10px;
   padding-block: 1.2rem;
   cursor: pointer;
+}
+
+.commentsContainer {
+  position:fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background: rgba(0,0,0,0.7);
+  overflow: hidden;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.allCommentsContainer{
+  width: 40vw;
+  height: fit-content;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inputField {
+    padding-inline: 1.3rem;
+    padding-block: 0.8rem;
+    outline: none;
+    border-radius: 10px;
+    border: 1px, solid, silver;
+    width: 90%;
+
 }

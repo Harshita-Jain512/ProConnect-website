@@ -25,6 +25,8 @@ export default function Dashboard() {
   const authState = useSelector((state) => state.auth);
   const postState = useSelector((state) => state.postReducer);
 
+  
+
   const [postContent, setPostContent] = useState("");
   const [fileContent, setFileContent] = useState(null);
   const [commentText, setCommentText] = useState("");
@@ -139,7 +141,8 @@ export default function Dashboard() {
                           {post.userId?.name}
                         </p>
 
-                        {post.userId?._id === authState.user?._id && (
+                        {post.userId?._id === authState.user?.userId?._id && (
+
                           <div
                             className={styles.trashIcon}
                             onClick={async () => {

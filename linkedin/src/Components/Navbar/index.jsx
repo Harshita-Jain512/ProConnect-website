@@ -29,9 +29,9 @@ function NavBarComponent() {
         <div className={styles.navBarOptionContainer}>
           {authState.profileFetched ? (
             <div style={{ display: "flex", gap: "1.2rem" }}>
-              <p>
+              {/*<p>
                 Hey, {authState.user?.userId?.name || authState.user?.name || "Guest"}
-              </p>
+              </p>*/}
 
               <p
                 style={{ fontWeight: "bold", cursor: "pointer" }}

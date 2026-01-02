@@ -107,6 +107,7 @@ border-radius: 20px;
 .singleOption__optionsContainer > svg {
   height: 100%;
   width: 8%;
+  min-width: 1rem;
 }
 .singleOption__optionsContainer{
   display: flex;
@@ -131,8 +132,10 @@ border-radius: 20px;
 }
 
 .allCommentsContainer{
-  width: 40vw;
+ /* width: 40vw;*/
+ min-width: 40svw;
   height: 80vh;
+  max-width: 1120px;
   background: white;
   border-radius: 10px;
   position: relative;
@@ -141,7 +144,7 @@ border-radius: 20px;
 .profileTextContainer {
   display: flex;
   flex-direction: column;
-  gap: "1.2rem"
+  gap: 1.2rem;
 
 
 }
@@ -151,10 +154,22 @@ border-radius: 20px;
 .nameAndTrash {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* spacing between name and trash icon */
+  gap: 0.5rem;
   justify-content: space-between;
-  
 }
+
+.trashIcon {
+  font-size: 1.1rem;         /* ✅ make visible */
+  cursor: pointer;
+  color: #e63946;            /* red trash */
+  margin-left: auto;         /* push to right */
+}
+
+.trashIcon:hover {
+  transform: scale(1.15);
+  color: #b30000;
+}
+
 .postCommentContainer{
   position: absolute;
   bottom: 1.2rem;
@@ -191,4 +206,14 @@ border-radius: 20px;
   color: white;
   cursor: pointer;
 }
+
+
+
+@media screen and (max-width: 600px) {
+   .allCommentsContainer {
+    width: 90%;
+   }
+}
+
+
 
