@@ -112,6 +112,18 @@
   border-radius: 10px;
 }
 
+.card__profileContainer {
+    display: flex;
+}
+
+.card__profileContainer > img {
+    width: 3.4rem;
+    height: auto;
+    height: 3.4rem;
+    object-fit: cover;
+}
+
+
 .card p {
   font-size: 14px;
   color: #333;

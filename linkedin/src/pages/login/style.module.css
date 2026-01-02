@@ -66,3 +66,36 @@
     gap: 1.2rem;
     padding-inline: 1.2rem;
 }
+
+@media (max-width: 600px) {
+  .container {
+    height: auto;
+    padding: 1rem;
+  }
+
+  .cardContainer {
+    
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+  }
+
+  .cardContainer__right {
+    display: none; /* hide blue panel */
+  }
+
+  .cardContainer__left {
+    flex: 1;
+    padding: 1.5rem;
+  }
+
+  .inputRow {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .inputField {
+    width: 100%;
+  }
+}
