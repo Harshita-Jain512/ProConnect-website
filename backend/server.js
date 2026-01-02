@@ -19,13 +19,17 @@ app.use('/uploads', express.static('uploads'));
 
 const start = async () => {
   try {
-    await mongoose.connect("mongodb+srv://HarshitaSaraf:Msaraf123@linkedinclone.idnisle.mongodb.net/?retryWrites=true&w=majority&appName=LinkedinClone");
+    await mongoose.connect(process.env.MONGO_URI);
 
     console.log("Connected to MongoDB Atlas");
 
-    app.listen(9080, () => {
-      console.log("Server is running on port 9080");
-    });
+    const PORT = process.env.PORT || 9080;
+
+
+    app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
   } catch (error) {
     console.error("MongoDB connection error:", error);
   }
