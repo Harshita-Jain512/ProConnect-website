@@ -16,6 +16,7 @@ function LoginComponent() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
+  const [errors, setErrors] = useState({});
 
   // ✅ After login, fetch user profile and redirect
   useEffect(() => {
@@ -42,21 +43,63 @@ function LoginComponent() {
     dispatch(emptyMessage());
   }, [userLoginMethod, dispatch]);
 
+  const validateLogin = () => {
+  const newErrors = {};
+
+  if (!email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    newErrors.email = "Enter a valid email";
+  }
+
+  if (!password.trim()) {
+    newErrors.password = "Password is required";
+  } else if (password.length < 8) {
+    newErrors.password = "Password must be at least 8 characters";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+const validateRegister = () => {
+  const newErrors = {};
+
+  if (!username.trim()) {
+    newErrors.username = "Username is required";
+  }
+
+  if (!name.trim()) {
+    newErrors.name = "Name is required";
+  }
+
+  if (!email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    newErrors.email = "Enter a valid email";
+  }
+
+  if (!password.trim()) {
+    newErrors.password = "Password is required";
+  } else if (password.length < 8) {
+    newErrors.password = "Password must be at least 8 characters";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
   const handleRegister = () => {
-    if (!username || !name || !email || !password) {
-      alert('All fields are required');
-      return;
-    }
-    dispatch(registerUser({ username, password, email, name }));
-  };
+  if (!validateRegister()) return;
+
+  dispatch(registerUser({ username, name, email, password }));
+};
 
   const handleLogin = () => {
-    if (!email || !password) {
-      alert('All fields are required');
-      return;
-    }
-    dispatch(loginUser({ email, password }));
-  };
+  if (!validateLogin()) return;
+
+  dispatch(loginUser({ email, password }));
+};
 
   const handleSubmit = () => {
     if (userLoginMethod) {
@@ -84,32 +127,71 @@ function LoginComponent() {
               {!userLoginMethod && (
                 <div className={styles.inputRow}>
                   <input
-                    onChange={(e) => setUsername(e.target.value)}
-                    className={styles.inputField}
-                    type="text"
-                    placeholder="Username"
-                  />
+  onChange={(e) => {
+    setUsername(e.target.value);
+    setErrors({ ...errors, username: "" });
+  }}
+  className={styles.inputField}
+  type="text"
+  placeholder="Username"
+/>
+
+{errors.username && (
+  <p style={{ color: "red", fontSize: "12px" }}>
+    {errors.username}
+  </p>
+)}
                   <input
-                    onChange={(e) => setName(e.target.value)}
-                    className={styles.inputField}
-                    type="text"
-                    placeholder="Name"
-                  />
+  value={name}
+  onChange={(e) => {
+    setName(e.target.value);
+    setErrors({ ...errors, name: "" });
+  }}
+  className={styles.inputField}
+  type="text"
+  placeholder="Name"
+/>
+
+{errors.name && (
+  <p style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
+    {errors.name}
+  </p>
+)}
                 </div>
               )}
 
               <input
-                onChange={(e) => setEmailAddress(e.target.value)}
-                className={styles.inputField}
-                type="text"
-                placeholder="Email"
-              />
+  value={email}
+  onChange={(e) => {
+    setEmailAddress(e.target.value);
+    setErrors({ ...errors, email: "" });
+  }}
+  className={styles.inputField}
+  type="text"
+  placeholder="Email"
+/>
+
+{errors.email && (
+  <p style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
+    {errors.email}
+  </p>
+)}
               <input
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.inputField}
-                type="password"
-                placeholder="Password"
-              />
+  value={password}
+  onChange={(e) => {
+    setPassword(e.target.value);
+    setErrors({ ...errors, password: "" });
+  }}
+  className={styles.inputField}
+  type="password"
+  placeholder="Password"
+/>
+
+{errors.password && (
+  <p style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
+    {errors.password}
+  </p>
+)}
 
               <div
                 onClick={handleSubmit}
@@ -132,7 +214,21 @@ function LoginComponent() {
             </div>
           </div>
 
-          <div className={styles.cardContainer__right}></div>
+          <div className={styles.cardContainer__right}>
+            <div>
+          {userLoginMethod
+                    ? <p>"Don't have an account? "</p>
+                    : <p>'Already have an account? '</p>}
+          <div onClick={() => {
+            
+            setUserLoginMethod(!userLoginMethod)
+          }}style={{color: "black", textAlign: "center"}} className={styles.buttonWithOutline}><p>
+                  {userLoginMethod
+                    ? "Sign Up"
+                    :'Sign In'}
+                </p></div>
+                </div>
+          </div>
         </div>
       </div>
     </UserLayout>

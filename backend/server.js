@@ -6,8 +6,8 @@ import postRoutes from "./routes/posts.routes.js";
 import userRoutes from  "./routes/user.routes.js";
 
 
-dotenv.config();
-
+dotenv.config({ path: "../.env" });
+console.log("MONGO_URI =", process.env.MONGO_URI);
 const app = express();
 app.use(cors());
 app.use(express.json());

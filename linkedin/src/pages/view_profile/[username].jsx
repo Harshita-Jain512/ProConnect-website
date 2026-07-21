@@ -154,12 +154,6 @@ window.open(`${BASE_URL}/${response.data.message}`, "_blank")
             {/* Profile Header */}
             {/*<div className={styles.profileHeader}>*/}
 
-              
-                
-                
-    
-
-    
             </div>
             </div>
                     )
